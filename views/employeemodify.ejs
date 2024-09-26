@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="font/bootstrap-icons.css">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/portal.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Banking Inc.</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="http://localhost:3000/">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>Customer Permissions</span>
+              </h6>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/employeeportal">
+                  <span data-feather="home"></span>
+                  Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/employeetransfer">
+                  <span data-feather="file-text"></span>
+                  Transfers
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/employeeacct">
+                  <span data-feather="user"></span>
+                  Account
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Employee Permissions</span>
+              </h6>
+              <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="search"></span>
+                  Modify Client <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+              <h1 class="h2">Modify Clients</h1>
+            </div>
+  
+            <div class="container">
+              <div class="my-3 p-3 bg-white rounded box-shadow border">
+                <div class="row">
+                  <div class="col-8 m-auto">Ryan Alexander</div>
+                  <div class="col m-auto">Customer</div>
+                  <div class="col m-auto">
+                    <button type="button" class="btn btn-primary p-auto m-auto" onclick="window.location.href='/customerportal'">View Client</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </main>
+      </div>
+    </div>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+  </body>
+</html>
