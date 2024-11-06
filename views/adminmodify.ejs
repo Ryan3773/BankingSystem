@@ -21,7 +21,7 @@
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Banking Inc.</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="http://localhost:3000/">Sign out</a>
+          <a class="nav-link" href="http://localhost:3000/logout">Sign out</a>
         </li>
       </ul>
     </nav>
@@ -50,72 +50,77 @@
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h1 class="h2">Modify Clients</h1>
           </div>
-
-          <div class="container">
-            <div class="my-3 p-3 bg-white rounded box-shadow border">
-              <div class="row">
-                <div class="col-4 m-auto">Ryan Alexander</div>
-                <div class="col m-auto">Customer</div>
-                <div class="col m-auto">
-                  <button type="button" class="btn btn-success p-auto m-auto">Promote</button>
-                </div>
-                <div class="col m-auto">
-                  <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">New Password</label>
-                  </div>
-                </div>
-                <div class="col m-auto">
-                  <button type="button" class="btn btn-danger p-auto m-auto">Reset Password</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="container">
-            <div class="my-3 p-3 bg-white rounded box-shadow border">
-              <div class="row">
-                <div class="col-4 m-auto">Isaac Turk</div>
-                <div class="col m-auto">Customer</div>
-                <div class="col m-auto">
-                  <button type="button" class="btn btn-success p-auto m-auto">Promote</button>
-                </div>
-                <div class="col m-auto">
-                  <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">New Password</label>
-                  </div>
-                </div>
-                <div class="col m-auto">
-                  <button type="button" class="btn btn-danger p-auto m-auto">Reset Password</button>
-                </div>
-              </div>
-            </div>
-          </div>
           
+          <% for(var i = 0; i < locals.allCustomerEmails.length; i++) { %>
+            <div class="container">
+              <div class="my-3 p-3 bg-white rounded box-shadow border">
+                <div class="row">
+                  <div class="col-4 m-auto"><%- locals.allCustomerEmails[i].email %></div>
+                  <div class="col m-auto">Customer</div>
+                  <div class="col m-auto">
+                    <form method="post">
+                      <button class="btn btn-success p-auto m-auto" type="submit">Promote</button>
+                      <input type="hidden" name="email" value="<%-locals.allCustomerEmails[i].email%>" >
+                      <input type="hidden" name="action" value="Promote">
+                    </form>
+                  </div>
+                  <div class="col m-auto">
+                    <div class="form-floating">
+                      <form method="post">
+                      <input type="password" class="form-control" id="<%- locals.allCustomerEmails[i].email %>'s_new_password" name="newPassword" placeholder="Password">
+                      <label for="newPassword">New Password</label>
+                    </div>
+                  </div>
+                  <div class="col m-auto">
+                      <button class="btn btn-danger p-auto m-auto" type="submit">Reset Password</button>
+                      <input type="hidden" name="email" value="<%- locals.allCustomerEmails[i].email %>">
+                      <input type="hidden" name="action" value="ResetPassword">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          
+          <% for(var i = 0; i < locals.allEmployeeEmails.length; i++) { %>
           <div class="container">
             <div class="my-3 p-3 bg-white rounded box-shadow border">
               <div class="row">
-                <div class="col-4 m-auto">Austin Bry</div>
+                <div class="col-4 m-auto"><%- locals.allEmployeeEmails[i].email %></div>
                 <div class="col m-auto">Employee</div>
                 <div class="col m-auto">
-                  <button type="button" class="btn btn-success p-auto m-auto">Promote</button>
+                  <form method="post">
+                    <button type="submit" class="btn btn-success p-auto m-auto" type="submit">Promote</button>
+                    <input type="hidden" name="email" value="<%- locals.allEmployeeEmails[i].email %>" >
+                    <input type="hidden" name="action" value="Promote">
+                  </form>
                 </div>
                 <div class="col m-auto">
-                  <button type="button" class="btn btn-warning p-auto m-auto">Demote</button>
+                  <form method="post">
+                    <button type="submit" class="btn btn-warning p-auto m-auto" type="submit">Demote</button>
+                    <input type="hidden" name="email" value="<%- locals.allEmployeeEmails[i].email %>" >
+                    <input type="hidden" name="action" value="Demote">
+                  </form>
                 </div>
                 <div class="col m-auto">
                   <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">New Password</label>
+                    <form method="post">
+                    <input type="password" class="form-control" id="<%- locals.allEmployeeEmails[i].email %>'s_new_password" placeholder="Password">
+                    <label for="newPassword">New Password</label>
+                    <input type="hidden" name="email" value="<%- locals.allEmployeeEmails[i].email %>">
+                    <input type="hidden" name="action" value="ResetPassword">
                   </div>
                 </div>
                 <div class="col m-auto">
-                  <button type="button" class="btn btn-danger p-auto m-auto">Reset Password</button>
+                    <button type="submit" class="btn btn-danger p-auto m-auto" type="submit">Reset Password</button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
+          <% } %>
+
+        </form>
 
         </main>
       </div>

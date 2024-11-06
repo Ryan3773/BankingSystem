@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="font/bootstrap-icons.css">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/portal.css" rel="stylesheet">
+    <script>
+      function checkTransfer(event) {
+        toText = document.getElementById("to").value;
+        if (toText == "") {
+          document.getElementById("message").innerHTML = "Please enter a recipient";
+          event.preventDefault();
+        }
+
+        fromText = document.getElementById("from").value;
+        if (fromText == "from") {
+          document.getElementById("message").innerHTML = "Please enter an account";
+          event.preventDefault();
+        }  
+
+        amount = document.getElementById("amount").value;
+        if (amount == "from") {
+          document.getElementById("message").innerHTML = "Please enter an amount";
+          event.preventDefault();
+        }  
+ 
+      }
+    </script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Banking Inc.</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="http://localhost:3000/logout">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>Customer Permissions</span>
+              </h6>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/modifyportal">
+                  <span data-feather="home"></span>
+                  Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="file-text"></span>
+                  Transfers <span class="sr-only">(current)</span>
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>Employee Permissions</span>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                <li class="nav-item">
+                  <a class="nav-link" href="http://localhost:3000/employeemodify">
+                    <span data-feather="search"></span>
+                    Go Back
+                  </a>
+                </li>
+                </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Transfer Summary</h1>
+          </div>
+          <div class="container">
+            <form method="post">
+                <div class="row">
+                  <div class="col">
+                    <label for="toEmail" class="form-label">To</label>
+                    <input type="text" class="form-control" placeholder="To - Email" id="toEmail" name="toEmail">
+                  </div>
+                  <div class="col">
+                    <label for="toAccount" class="form-label">To Account</label>
+                    <select id="toAccount" name="toAccount" class="form-control">  
+                      <option selected>To - Account</option>  
+                      <option value="CA">Checking Account</option>  
+                      <option value="SA">Savings Account</option>    
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="fromAccount" class="form-label">From</label>
+                    <div class="input-group mb-3">
+                      <select id="fromAccount" name="fromAccount" class="form-control">  
+                        <option selected>From - Account</option>  
+                        <option value="CA">Checking Account</option>  
+                        <option value="SA">Savings Account</option>    
+                      </select>
+                    </div>
+                    </div>
+                    <div class="col">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="text" class="form-control" placeholder="Amount" id="amount" name="amount">
+                    </div>
+                </div>
+                <div class="mb-3 mt-2">
+                    <label for="memo" class="form-label">Memo</label>
+                    <textarea class="form-control" id="memo" name="memo" rows="3"></textarea>
+                </div>
+                <div>
+                  <p id="message" class="text-danger" style="height:25px"><%- locals.message %></p>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-3">Transfer</button>
+                </div>
+              </form>
+          </div>
+      <% if(locals.result[0].length > 0) { %>
+        <% for(var i = 0; i < locals.result[0].length; i++) { %>
+          <div class="container">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+              <h6 class="border-bottom border-gray pb-2 mb-0">Transfered from <%- locals.result[0][i].fromUserEmail %>'s <%- locals.result[0][i].fromUserAccount %> to <%- locals.result[0][i].toUserEmail %>'s <%- locals.result[0][i].toUserAccount %></h6>
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-gray">
+                  <strong class="d-block text-gray-dark"><%- locals.result[0][i].amount %></strong>
+                  <strong class="d-block text-gray-dark"><%- locals.result[0][i].timeSent %></strong>
+                  <strong class="d-block text-gray-dark"><%- locals.result[0][i].memo %></strong>
+                </p>
+              </div>
+            </div>  
+          </div>
+        <% } %>
+      <% } else { %>
+        <p class="text-center">No Transfers Yet</p>
+      <% } %>
+        </main>
+      </div>
+    </div>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+  </body>
+</html>

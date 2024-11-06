@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
     console.log("Session variable set test: " + req.session.test);
   }
 
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express', banker_id: '-1', email: '0', loggedIn: false});
 });
 
 

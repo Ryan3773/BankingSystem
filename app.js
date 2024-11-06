@@ -7,6 +7,7 @@ var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 
 var indexRouter = require('./routes/index');
+var logoutRouter = require('./routes/logout');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var adminLoginRouter = require('./routes/adminlogin');
@@ -20,6 +21,8 @@ var employeeLoginRouter = require('./routes/employeelogin');
 var employeePortalRouter = require('./routes/employeeportal');
 var employeeTransferRouter = require('./routes/employeetransfer');
 var employeeModifyRouter = require('./routes/employeemodify');
+var modifyPortalRouter = require('./routes/modifyportal');
+var modifyTransferRouter = require('./routes/modifytransfer');
 
 var app = express();
 
@@ -34,6 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap/dist/")));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap-icons/")));
+app.use(express.static(path.join(__dirname, "node_modules/crypto-js/")));
 
 //This will set up the database if it doesn't already exist
 var dbCon = require('./lib/database');
@@ -47,8 +51,8 @@ app.use(session({
     key: 'session_cookie_name',
     secret: 'session_cookie_secret1234',
     store: sessionStore,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
   cookie : {
     sameSite: 'strict'
   }
@@ -61,6 +65,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRouter);
+app.use('/logout', logoutRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/adminlogin', adminLoginRouter);
@@ -74,6 +79,8 @@ app.use('/employeelogin', employeeLoginRouter);
 app.use('/employeeportal', employeePortalRouter);
 app.use('/employeetransfer', employeeTransferRouter);
 app.use('/employeemodify', employeeModifyRouter);
+app.use('/modifyportal', modifyPortalRouter);
+app.use('/modifytransfer', modifyTransferRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -21,7 +21,7 @@
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Banking Inc.</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="http://localhost:3000/">Sign out</a>
+          <a class="nav-link" href="http://localhost:3000/logout">Sign out</a>
         </li>
       </ul>
     </nav>
@@ -46,12 +46,6 @@
                   Transfers
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="http://localhost:3000/employeeacct">
-                  <span data-feather="user"></span>
-                  Account
-                </a>
-              </li>
             </ul>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -69,23 +63,26 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-              <h1 class="h2">Modify Clients</h1>
-            </div>
-  
-            <div class="container">
-              <div class="my-3 p-3 bg-white rounded box-shadow border">
-                <div class="row">
-                  <div class="col-8 m-auto">Ryan Alexander</div>
-                  <div class="col m-auto">Customer</div>
-                  <div class="col m-auto">
-                    <button type="button" class="btn btn-primary p-auto m-auto" onclick="window.location.href='/customerportal'">View Client</button>
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Modify Clients</h1>
+          </div>
+          <% for(var i = 0; i < locals.allEmails.length; i++) { %>
+            <form method="post">
+              <div class="container">
+                <div class="my-3 p-3 bg-white rounded box-shadow border">
+                  <div class="row">
+                    <div class="col-8 m-auto"><%- locals.allEmails[i].email %></div>
+                    <div class="col m-auto">Customer</div>
+                    <div class="col m-auto">
+                      <button type="submit" class="btn btn-primary p-auto m-auto" name="<%- locals.allEmails[i].email %>">View Client</button>
+                      <input type="hidden" name="email" value="<%- locals.allEmails[i].email %>" >
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-  
-          </main>
+            </form>
+          <% } %>
+        </main>
       </div>
     </div>
 

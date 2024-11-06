@@ -14,6 +14,21 @@
 
     <!-- Custom styles for this template -->
     <link href="/stylesheets/portal.css" rel="stylesheet">
+    <script>
+      function checkPassword(event) {
+        oldPassword = document.getElementById("oldPassword").value;
+        if (oldPassword == "") {
+          document.getElementById("message").innerHTML = "Please enter your Old Password";
+          event.preventDefault();
+        }
+
+        newPassword = document.getElementById("newPassword").value;
+        if (newPassword == "") {
+          document.getElementById("message").innerHTML = "Please enter your New Password";
+          event.preventDefault();
+        }  
+      }
+    </script>
   </head>
 
   <body>
@@ -21,7 +36,7 @@
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Banking Inc.</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="http://localhost:3000/">Sign out</a>
+          <a class="nav-link" href="http://localhost:3000/logout">Sign out</a>
         </li>
       </ul>
     </nav>
@@ -62,15 +77,18 @@
           </div>
 
           <div class="container">
-          <form method="post">
+          <form onSubmit="return checkPassword(event);" method="post">
             <h1 class="h3 mb-3 fw-normal">Change Password</h1>
             <div class="form-floating">
-              <input class="form-control" id="floatingInput" placeholder="xxxxxx">
-              <label for="floatingInput">Old Password</label>
+              <input class="form-control" id="oldPassword" name="oldPassword" placeholder="xxxxxx">
+              <label for="oldPassword">Old Password</label>
             </div>
             <div class="form-floating">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-              <label for="floatingPassword">New Password</label>
+              <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Password">
+              <label for="newPassword">New Password</label>
+            </div>
+            <div>
+              <p id="message" class="text-danger" style="height:25px"><%- locals.message %></p>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Change Password</button>
           </form>

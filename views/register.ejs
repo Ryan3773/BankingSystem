@@ -32,21 +32,62 @@
     
     <!-- Custom styles for this template -->
     <link href="/stylesheets/signin.css" rel="stylesheet">
+    <script type="text/javascript" src="crypto-js.js"></script>
+
+    <script>
+      function checkPassword(event) {
+        // Hashing -> One Way Mucking
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        let message = "";
+        let passwordValid = false;
+
+        if(email == "") {
+          message = "Please Enter an Email";
+          passwordValid = false;
+        } else {
+          passwordValid = true;
+        }
+  
+        if(password == "") {
+          message = "Please Enter a Password";
+          passwordValid = false;
+        } else {
+          passwordValid = true;
+        }
+  
+        if(!passwordValid) {
+          document.getElementById("message").innerHTML = message;
+          event.preventDefault();
+        } else {
+          let salt = CryptoJS.lib.WordArray.random(8);
+          document.getElementById("salt").value = salt;
+          let hash = CryptoJS.SHA256(password + ":" + salt).toString(CryptoJS.enc.Hex);
+          document.getElementById("hash").value = hash;
+        }
+      }
+    </script>
   </head>
 
   <body class="text-center"> 
     <main class="form-signin">
-      <form method="post">
+      <form onSubmit="return checkPassword(event);" method="post">
         <i class="bi bi-person-circle" style="font-size: 70px"></i>
         <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
         <div class="form-floating">
-          <input class="form-control" id="floatingInput" placeholder="email@mail.com">
-          <label for="floatingInput">Email Address</label>
+          <input class="form-control" id="email" name="email" placeholder="email@mail.com">
+          <label for="email">Email Address</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-          <label for="floatingPassword">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password">
+          <label for="password">Password</label>
         </div>
+        <div>
+          <p id="message" class="text-danger" style="height:25px"><%- locals.message %></p>
+        </div>
+        <input type="hidden" id="hash" name="hash">
+        <input type="hidden" id="salt" name="salt">
         <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
       </form>
 
